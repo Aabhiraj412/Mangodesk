@@ -1,5 +1,8 @@
 {
-	"buildCommand": "cd Frontend && npm install && npm run build",
+	"version": 2,
+	"framework": null,
+	"installCommand": "echo 'No root install needed'",
+	"buildCommand": "cd Frontend && bun install && bun run build",
 	"outputDirectory": "Frontend/dist",
 	"routes": [
 		{

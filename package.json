@@ -13,7 +13,7 @@
 		"frontend:dev": "cd Frontend && bun run dev",
 		"frontend:build": "cd Frontend && bun run build",
 		"frontend:preview": "cd Frontend && bun run preview",
-		"install:all": "bun install && cd Backend && bun install && cd ../Frontend && bun install",
+		"install:all": "echo 'Skipping install:all for Vercel'",
 		"clean": "rm -rf node_modules Backend/node_modules Frontend/node_modules",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build:prod": "bun run build && NODE_ENV=production bun run start",

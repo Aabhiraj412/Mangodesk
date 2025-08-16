@@ -5,7 +5,7 @@ server/
 .env.production
 .env.development
 node_modules/
-*.log
+\*.log
 README.md
 build.sh
 BUILD_NOTES.md
