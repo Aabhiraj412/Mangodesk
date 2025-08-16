@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { fileURLToPath } from "url";
 import ConnectDB from "./database/DB.js";
 import summaryRoutes from "./routes/summaryRoutes.js";
 import { handleUploadError } from "./middlewares/uploadMiddleware.js";
