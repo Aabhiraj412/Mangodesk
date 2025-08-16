@@ -17,7 +17,6 @@ AI-Powered Meeting Notes Summarizer - A full-stack MERN application that transfo
 -   **Backend**: Node.js, Express.js, MongoDB Atlas
 -   **AI Service**: Groq SDK with Llama models
 -   **Package Manager**: Bun
--   **Deployment**: Single-command unified development and production setup
 
 ## Quick Start
 
@@ -30,16 +29,21 @@ AI-Powered Meeting Notes Summarizer - A full-stack MERN application that transfo
 
 ### Installation & Development
 
-1. **Clone and install dependencies:**
+1. **Clone the repository:**
 
     ```bash
     git clone <repository-url>
     cd Mangodesk
+    ```
+
+2. **Set up Backend:**
+
+    ```bash
+    cd Backend
     bun install
     ```
 
-2. **Set up environment variables:**
-   Create `.env` file in the `Backend` directory:
+    Create `.env` file in the `Backend` directory:
 
     ```env
     MONGO_URI=your_mongodb_connection_string
@@ -49,25 +53,32 @@ AI-Powered Meeting Notes Summarizer - A full-stack MERN application that transfo
     NODE_ENV=development
     ```
 
-3. **Start development servers:**
+3. **Set up Frontend:**
+
     ```bash
+    cd ../Frontend
+    bun install
+    ```
+
+4. **Start Development Servers:**
+
+    **Backend** (Terminal 1):
+
+    ```bash
+    cd Backend
     bun run dev
     ```
-    This single command starts both frontend (http://localhost:5173+) and backend (http://localhost:5000) with API proxying.
 
-### Production Deployment
+    Backend will run on http://localhost:5000
 
-1. **Build for production:**
+    **Frontend** (Terminal 2):
 
     ```bash
-    bun run build
+    cd Frontend
+    bun run dev
     ```
 
-2. **Start production server:**
-    ```bash
-    NODE_ENV=production bun run start
-    ```
-    Serves both frontend and backend on single port (5000) with static file serving.
+    Frontend will run on http://localhost:5173
 
 ## API Endpoints
 
@@ -80,22 +91,32 @@ AI-Powered Meeting Notes Summarizer - A full-stack MERN application that transfo
 
 ## Development Scripts
 
+**Backend (cd Backend):**
+
 ```bash
-bun run dev          # Start both frontend and backend in development
+bun run dev          # Start backend in development mode
+bun run start        # Start backend in production mode
+```
+
+**Frontend (cd Frontend):**
+
+```bash
+bun run dev          # Start frontend development server
 bun run build        # Build frontend for production
-bun run start        # Start production server
-bun run backend:dev  # Start only backend in development
-bun run frontend:dev # Start only frontend in development
-bun install:all      # Install all dependencies (root, backend, frontend)
+bun run preview      # Preview production build
+```
+
+**Root directory:**
+
+```bash
 bun run clean        # Remove all node_modules directories
 ```
 
 ## Project Structure
 
 ```
-├── package.json          # Root package.json with unified scripts
 ├── Backend/              # Express.js API server
-│   ├── server.js         # Main server with static file serving
+│   ├── server.js         # Main API server
 │   ├── controllers/      # API controllers
 │   ├── routes/          # API routes
 │   ├── models/          # MongoDB models
@@ -110,10 +131,14 @@ bun run clean        # Remove all node_modules directories
 
 ## Environment Configuration
 
-The application automatically adapts to development vs production environments:
+The application uses separate development servers:
 
--   **Development**: Frontend runs on separate port with API proxying
--   **Production**: Frontend served as static files from backend on single port
+-   **Backend**: Runs on port 5000 (API only)
+-   **Frontend**: Runs on port 5173 with API proxy to backend
+
+## Deployment
+
+Deploy the Frontend and Backend separately to your preferred platforms (Vercel, Netlify, Heroku, etc.).
 
 ## Contributing
 

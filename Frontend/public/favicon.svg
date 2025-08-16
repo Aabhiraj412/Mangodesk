@@ -1,0 +1,23 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background circle -->
+    <circle cx="16" cy="16" r="16" fill="#10B981" />
+
+    <!-- Mango shape -->
+    <path
+        d="M8 12C8 9.79086 9.79086 8 12 8H20C22.2091 8 24 9.79086 24 12V16C24 20.4183 20.4183 24 16 24C11.5817 24 8 20.4183 8 16V12Z"
+        fill="#FEF3C7" />
+
+    <!-- Mango highlight -->
+    <path
+        d="M10 12C10 10.8954 10.8954 10 12 10H18C19.1046 10 20 10.8954 20 12V14C20 17.3137 17.3137 20 14 20C12.8954 20 12 19.1046 12 18V14C12 12.8954 11.1046 12 10 12Z"
+        fill="#FCD34D" />
+
+    <!-- Document lines (representing notes/summaries) -->
+    <rect x="11" y="13" width="6" height="1" rx="0.5" fill="#065F46" />
+    <rect x="11" y="15" width="8" height="1" rx="0.5" fill="#065F46" />
+    <rect x="11" y="17" width="4" height="1" rx="0.5" fill="#065F46" />
+
+    <!-- AI sparkle -->
+    <circle cx="22" cy="10" r="1.5" fill="#FFFFFF" />
+    <path d="M22 7L22.5 8.5L24 9L22.5 9.5L22 11L21.5 9.5L20 9L21.5 8.5L22 7Z" fill="#FFFFFF" />
+</svg>

@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import path from "path";
 import { fileURLToPath } from "url";
 import ConnectDB from "./database/DB.js";
 import summaryRoutes from "./routes/summaryRoutes.js";
@@ -9,14 +8,22 @@ import { handleUploadError } from "./middlewares/uploadMiddleware.js";
 
 dotenv.config();
 
+// Validate required environment variables
+const requiredEnvVars = ['MongoDB_URI', 'GROQ_API_KEY'];
+const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+if (missingEnvVars.length > 0) {
+	console.error("❌ Missing required environment variables:", missingEnvVars.join(', '));
+	if (process.env.NODE_ENV === "production") {
+		process.exit(1);
+	}
+} else {
+	console.log("✅ All required environment variables are configured");
+}
+
 const Port = process.env.PORT || 5000;
 const app = express();
 
-// Get current directory for ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// CORS configuration - more permissive for production
 const corsOptions = {
 	origin:
 		process.env.NODE_ENV === "production"
@@ -32,71 +39,75 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 // Health check endpoint
 app.get("/api/health", (req, res) => {
 	res.json({
-		message: "AI-Powered Meeting Notes Summarizer API is running!",
-		timestamp: new Date().toISOString(),
+		status: "healthy",
+		service: "MangoDesk AI Summarizer API",
 		version: process.env.VERSION || "1.0.0",
+		environment: process.env.NODE_ENV || "development",
+		timestamp: new Date().toISOString(),
+		uptime: process.uptime(),
+		memory: {
+			used: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
+			total: Math.round(process.memoryUsage().heapTotal / 1024 / 1024)
+		}
 	});
 });
 
 // API Routes
 app.use("/api/summaries", summaryRoutes);
 
-// Serve static files from Frontend dist directory in production
-if (process.env.NODE_ENV === "production") {
-	const frontendDistPath = path.join(__dirname, "../Frontend/dist");
-	app.use(express.static(frontendDistPath));
-
-	// Handle specific React routes
-	app.get("/dashboard", (req, res) => {
-		res.sendFile(path.join(frontendDistPath, "index.html"));
+// Development and production API endpoint
+app.get("/", (req, res) => {
+	res.json({
+		service: "MangoDesk AI Summarizer API",
+		version: process.env.VERSION || "1.0.0",
+		status: "active",
+		environment: process.env.NODE_ENV || "development",
+		endpoints: {
+			health: "/api/health",
+			summaries: "/api/summaries"
+		},
+		timestamp: new Date().toISOString()
 	});
-
-	app.get("/summary/:id", (req, res) => {
-		res.sendFile(path.join(frontendDistPath, "index.html"));
-	});
-
-	// Handle root route in production
-	app.get("/", (req, res) => {
-		res.sendFile(path.join(frontendDistPath, "index.html"));
-	});
-} else {
-	// Development mode - show development message for root only
-	app.get("/", (req, res) => {
-		res.json({
-			message: "AI-Powered Meeting Notes Summarizer API",
-			mode: "Development",
-			frontend:
-				"Run 'npm run dev' from root directory to start both frontend and backend",
-			api_health: `http://localhost:${Port}/api/health`,
-		});
-	});
-}
+});
 
 // Upload error handling middleware
 app.use(handleUploadError);
 
 // Global error handling middleware
 app.use((error, req, res, next) => {
-	console.error("Global error handler:", error);
+	const timestamp = new Date().toISOString();
+	console.error(`❌ [${timestamp}] Global Error:`, error.message);
+	
+	if (process.env.NODE_ENV === "development") {
+		console.error("Stack trace:", error.stack);
+	}
+	
 	res.status(500).json({
 		success: false,
-		message: "Something went wrong!",
-		error:
-			process.env.NODE_ENV === "development"
-				? error.message
-				: "Internal server error",
+		message: "Internal server error occurred",
+		timestamp,
+		...(process.env.NODE_ENV === "development" && {
+			error: error.message,
+			stack: error.stack
+		})
 	});
 });
 
 app.listen(Port, () => {
-	console.log(`🚀 Server is running on port ${Port}`);
-	console.log(`📋 API Health Check: http://localhost:${Port}/api/health`);
-	if (process.env.NODE_ENV === "production") {
-		console.log(`🌐 Full Application: http://localhost:${Port}`);
-	} else {
-		console.log(
-			`💻 Development mode: Frontend runs separately on port 5173`
-		);
-	}
+	console.log(`🚀 MangoDesk API Server running on port ${Port}`);
+	console.log(`📋 Health Check: /api/health`);
+	console.log(`🌍 Environment: ${process.env.NODE_ENV || "development"}`);
+	console.log(`⚡ Server started at ${new Date().toISOString()}`);
 	ConnectDB();
+});
+
+// Graceful shutdown handlers
+process.on('SIGTERM', () => {
+	console.log('🛑 SIGTERM received, shutting down gracefully...');
+	process.exit(0);
+});
+
+process.on('SIGINT', () => {
+	console.log('🛑 SIGINT received, shutting down gracefully...');
+	process.exit(0);
 });

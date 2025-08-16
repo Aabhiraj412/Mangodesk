@@ -666,7 +666,7 @@ const Home = () => {
 							isDarkMode ? "text-gray-400" : "text-gray-500"
 						}`}
 					>
-						Built with ❤️ using MERN Stack • Powered by Groq AI •
+						Built using MERN Stack • Powered by Groq AI •
 						MangoDesk 2025
 					</p>
 				</footer>
