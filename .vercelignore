@@ -1,0 +1,11 @@
+Backend/
+server/
+.env
+.env.local
+.env.production
+.env.development
+node_modules/
+*.log
+README.md
+build.sh
+BUILD_NOTES.md

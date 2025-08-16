@@ -1,12 +1,10 @@
 {
-  "version": 2,
-  "buildCommand": "cd Frontend && bun install && bun run build",
-  "outputDirectory": "Frontend/dist",
-  "installCommand": "bun install",
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+	"buildCommand": "cd Frontend && npm install && npm run build",
+	"outputDirectory": "Frontend/dist",
+	"routes": [
+		{
+			"src": "/(.*)",
+			"dest": "/index.html"
+		}
+	]
 }
