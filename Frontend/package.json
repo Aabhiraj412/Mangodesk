@@ -1,13 +1,16 @@
 {
-	"name": "frontend",
+	"name": "mangodesk-frontend",
 	"private": true,
-	"version": "0.0.0",
+	"version": "1.1.0",
 	"type": "module",
+	"description": "MangoDesk AI Summarizer - Frontend React Application",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
 		"lint": "eslint .",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"build:prod": "NODE_ENV=production vite build",
+		"test:api": "node scripts/test-api.js"
 	},
 	"dependencies": {
 		"@tailwindcss/typography": "^0.5.15",

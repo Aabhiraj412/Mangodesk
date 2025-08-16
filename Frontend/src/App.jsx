@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Home from "./Components/Home.jsx";
+import { ENV } from "./utils/environment.js";
 
 const App = () => {
 	// Listen for dark mode changes and update document class
@@ -37,7 +38,7 @@ const App = () => {
 			<Toaster
 				position="top-right"
 				toastOptions={{
-					duration: 4000,
+					duration: ENV.isDevelopment ? 4000 : 3000,
 					style: {
 						background: "#363636",
 						color: "#fff",
