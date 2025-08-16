@@ -125,4 +125,4 @@ The application automatically adapts to development vs production environments:
 
 ## License
 
-This project is licensed under the GNU GENERAL PUBLIC LICENSE Version 3.
+This project is licensed under the MIT License.
