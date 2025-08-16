@@ -3,10 +3,11 @@ export const ENV = {
 	isDevelopment: import.meta.env.DEV,
 	isProduction: import.meta.env.PROD,
 	apiBaseURL:
-		import.meta.env.VITE_API_BASE_URL ||
-		(import.meta.env.PROD
+		import.meta.env.VITE_API_BASE_URL
+			? import.meta.env.VITE_API_BASE_URL
+			: import.meta.env.PROD
 			? "https://mangodesk-0boz.onrender.com/api"
-			: "http://localhost:5000/api"),
+			: "http://localhost:5000/api",
 	appName: import.meta.env.VITE_APP_NAME || "MangoDesk AI Summarizer",
 	appVersion: import.meta.env.VITE_APP_VERSION || "1.1.0",
 	defaultTheme: import.meta.env.VITE_DEFAULT_THEME || "light",
