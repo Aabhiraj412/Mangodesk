@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "buildCommand": "./build.sh",
+  "buildCommand": "cd Frontend && bun install && bun run build",
   "outputDirectory": "Frontend/dist",
-  "installCommand": "echo 'Dependencies will be installed by build script'",
+  "installCommand": "bun install",
   "routes": [
     {
       "src": "/(.*)",

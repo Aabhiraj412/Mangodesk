@@ -6,7 +6,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "concurrently \"bun run backend:dev\" \"bun run frontend:dev\"",
-		"build": "./build.sh",
+		"build": "cd Frontend && bun install && bun run build",
 		"start": "bun run backend:start",
 		"backend:dev": "cd Backend && bun run dev",
 		"backend:start": "cd Backend && bun run start",
